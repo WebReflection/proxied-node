@@ -29,7 +29,7 @@ for (const [_, values] of Object.entries(networkInterfaces())) {
  * @property {object} namespace the namespace to proxy to each client
  * @property {RegExp=} match an optional client side URL to match. By default is /\/(?:m?js\/)?proxied-node\.m?js$/
  * @property {string=} host an optional host name to use. it's IPv4 / localhost otherwise
- * @property {number=} port an optional  port to use when wss is *not* an instance of WebSocketServer already
+ * @property {number=} port an optional  port to use when wss is an instance of WebSocketServer already
  */
 
 /**

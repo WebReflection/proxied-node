@@ -20,7 +20,7 @@ const handler = proxiedNode({
   namespace,  // the namespace to proxy to each client
   match,      // an optional client side URL to match. By default is /js/proxied-node.js
   host,       // an optional host name to use. it's IPv4 / localhost otherwise
-  port,       // an optional  port to use when wss is *not* an instance of WebSocketServer already
+  port,       // an optional  port to use when wss is an instance of WebSocketServer already
 });
 
 // express
