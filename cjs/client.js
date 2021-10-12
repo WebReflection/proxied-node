@@ -81,7 +81,7 @@ function proxy() {
     args = null,
     $ = o => o
   ) => new Promise((ok, err) => {
-    let id = `proxied-worker:${instance}:${uid++}`;
+    const id = `proxied-worker:${instance}:${uid++}`;
     const target = worker(port);
     target.addEventListener('message', function message({
       data: {id: wid, result, error}
@@ -128,17 +128,25 @@ function proxy() {
   const handler = {
     apply(target, _, args) {
       const {id, list} = target();
-      list[list.length - 1] += '.apply';
-      return bus.then(port => post(port, id, list, args));
+      return bus.then(port => post(
+        port, id, ['apply'].concat(list), args)
+      );
     },
     construct(target, args) {
       const {id, list} = target();
-      list[list.length - 1] += '.new';
-      return bus.then(port => post(port, id, list, args, result => {
-        const proxy = create(result, []);
-        registry.register(proxy, result);
-        return proxy;
-      }));
+      return bus.then(
+        port => post(
+          port,
+          id,
+          ['new'].concat(list),
+          args,
+          O => {
+            const proxy = create(O, []);
+            registry.register(proxy, O);
+            return proxy;
+          }
+        )
+      );
     },
     get(target, key) {
       const {id, list} = target();
@@ -146,7 +154,9 @@ function proxy() {
       switch (key) {
         case 'then':
           return length ?
-            (ok, err) => bus.then(port => post(port, id, list).then(ok, err)) :
+            (ok, err) => bus.then(
+              port => post(port, id, ['get'].concat(list)).then(ok, err)
+            ) :
             void 0;
         case 'addEventListener':
         case 'removeEventListener':
