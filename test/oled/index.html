@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Oled Update</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script type="module">
+  import('/proxied-node.js').then(async ({default: {show}}) => {
+    const input = document.querySelector('input');
+    const button = document.querySelector('button');
+
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      await show(input.value.trim());
+      button.disabled = false;
+    });
+
+    button.disabled = false;
+  });
+  </script>
+</head>
+<body>
+  <input placeholder="write something">
+  <button disabled>update</button>
+</body>
+</html>

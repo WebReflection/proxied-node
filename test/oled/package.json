@@ -1,0 +1,12 @@
+{
+  "name": "proxied-node-oled",
+  "private": true,
+  "dependencies": {
+    "proxied-node": "latest",
+    "express": "latest",
+    "johnny-five": "latest",
+    "oled-font-5x7": "latest",
+    "oled-js": "latest",
+    "raspi-io": "latest"
+  }
+}
