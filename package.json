@@ -1,0 +1,44 @@
+{
+  "name": "proxied-node",
+  "version": "0.0.2",
+  "description": "A proxied-worker for NodeJS",
+  "main": "./cjs/index.js",
+  "scripts": {
+    "build": "npm run cjs && npm run test",
+    "cjs": "ascjs --no-default esm cjs",
+    "test": "echo 'http://localhost:8080/'; node test/express.js"
+  },
+  "keywords": [
+    "proxy",
+    "nodejs",
+    "worker",
+    "electroff",
+    "proxied-worker"
+  ],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "devDependencies": {
+    "ascjs": "^5.0.1",
+    "express": "^4.17.1"
+  },
+  "module": "./esm/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "ws": "^8.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/proxied-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WebReflection/proxied-node/issues"
+  },
+  "homepage": "https://github.com/WebReflection/proxied-node#readme"
+}
