@@ -11,7 +11,7 @@ Check the [oled screen demo](./test/oled/) to try it out on a Raspberry Pi.
 
 The default export is a common server handler factory function.
 
-If accepts few configurations options to enable a variety of use cases, even multiple proxied namespaces, whenever that's needed.
+It accepts few configurations options to enable a variety of use cases, even multiple proxied namespaces, whenever that's needed.
 
 ```js
 // same as: const proxiedNode = require('proxied-node');

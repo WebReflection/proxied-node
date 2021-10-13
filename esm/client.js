@@ -139,9 +139,9 @@ function proxy() {
           id,
           ['new'].concat(list),
           args,
-          O => {
-            const proxy = create(O, []);
-            registry.register(proxy, O);
+          result => {
+            const proxy = create(result, []);
+            registry.register(proxy, result);
             return proxy;
           }
         )
