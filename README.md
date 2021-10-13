@@ -4,6 +4,9 @@ This is exactly the same [proxied-worker](https://github.com/WebReflection/proxi
 
 The only difference is that the client side is already the exported namespace, not a Worker to initialize.
 
+Check the [oled screen demo](./test/oled/) to try it out on a Raspberry Pi.
+
+
 ## API
 
 The default export is a common server handler factory function.
@@ -33,6 +36,7 @@ createServer((req, res) => {
   // ... rest of the logic
 });
 ```
+
 
 ### Server Side Example
 ```js
@@ -80,6 +84,7 @@ app.use(handler);
 app.use(express.static(__dirname));
 app.listen(PORT);
 ```
+
 
 ### Client Side Example
 ```html
