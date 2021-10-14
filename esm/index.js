@@ -1,20 +1,10 @@
 /*! (c) Andrea Giammarchi */
 
-import {networkInterfaces} from 'os';
+import IPv4 from 'any-ipv4';
 import {WebSocketServer} from 'ws';
 
 import clientExport from './client.js';
 import serverExport from './server.js';
-
-const addresses = [];
-for (const [_, values] of Object.entries(networkInterfaces())) {
-  addresses.push(...values.filter(
-    ({family, address}) => (
-      family === 'IPv4' &&
-      address !== '127.0.0.1'
-    )
-  ));
-}
 
 /**
  * @callback RequestHandler an express or generic node http server handler
@@ -38,8 +28,8 @@ for (const [_, values] of Object.entries(networkInterfaces())) {
  * @returns {RequestHandler}
  */
 export default function ({wss: options, namespace, match, host, port}) {
-  const {address} = (addresses.shift() || {address: 'locahost'});
-  const ws = `ws://${host || address}:${port || options.port}`;
+  const address = host || (IPv4.length ? IPv4 : 'localhost');
+  const ws = `ws://${address}:${port || options.port}`;
   const re = match || /\/(?:m?js\/)?proxied-node\.m?js$/;
   serverExport(
     options instanceof WebSocketServer ?

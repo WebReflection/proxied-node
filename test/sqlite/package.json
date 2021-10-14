@@ -1,0 +1,14 @@
+{
+  "name": "proxied-node-sqlite",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "any-ipv4": "latest",
+    "proxied-node": "latest",
+    "sqlite3": "latest",
+    "sqlite-tag": "latest",
+    "express": "latest"
+  }
+}

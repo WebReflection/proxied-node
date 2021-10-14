@@ -1,21 +1,11 @@
 'use strict';
 /*! (c) Andrea Giammarchi */
 
-const {networkInterfaces} = require('os');
+const IPv4 = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('any-ipv4'));
 const {WebSocketServer} = require('ws');
 
 const clientExport = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('./client.js'));
 const serverExport = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('./server.js'));
-
-const addresses = [];
-for (const [_, values] of Object.entries(networkInterfaces())) {
-  addresses.push(...values.filter(
-    ({family, address}) => (
-      family === 'IPv4' &&
-      address !== '127.0.0.1'
-    )
-  ));
-}
 
 /**
  * @callback RequestHandler an express or generic node http server handler
@@ -39,8 +29,8 @@ for (const [_, values] of Object.entries(networkInterfaces())) {
  * @returns {RequestHandler}
  */
 module.exports = function ({wss: options, namespace, match, host, port}) {
-  const {address} = (addresses.shift() || {address: 'locahost'});
-  const ws = `ws://${host || address}:${port || options.port}`;
+  const address = host || (IPv4.length ? IPv4 : 'localhost');
+  const ws = `ws://${address}:${port || options.port}`;
   const re = match || /\/(?:m?js\/)?proxied-node\.m?js$/;
   serverExport(
     options instanceof WebSocketServer ?

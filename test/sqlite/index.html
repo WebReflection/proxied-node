@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Oled Update</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script type="module">
+  import('/proxied-node.js').then(async ({default: {tags}}) => {
+    const {all, get, query, raw} = tags;
+    console.log('✔', 'table creation');
+    await query`CREATE TABLE IF NOT EXISTS lorem (info TEXT)`;
+
+    console.log('✔', 'multiple inserts (no statement)');
+    for (let i = 0; i < 10; i++)
+      await query`INSERT INTO lorem VALUES (${'Ipsum ' + i})`;
+
+    console.log('✔', 'Single row');
+    const row = await get`
+      SELECT rowid AS id, info
+      FROM lorem
+      WHERE info = ${'Ipsum 5'}
+    `;
+    console.log(' ', row.id + ": " + row.info);
+
+    console.log('✔', 'Multiple rows');
+    const TABLE = 'lorem';
+    const rows = await all`SELECT rowid AS id, info FROM lorem`;
+    for (const row of rows)
+      console.log(' ', row.id + ": " + row.info);
+
+    console.log('✔', 'Error handling');
+    try {
+      await query`INSERT INTO shenanigans VALUES (1, 2, 3)`;
+    }
+    catch (error) {
+      console.error(error);
+    }
+
+    query`DELETE FROM lorem`;
+  });
+  </script>
+</head>
+<body>
+  <input placeholder="write something">
+  <button disabled>update</button>
+</body>
+</html>

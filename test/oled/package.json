@@ -1,7 +1,11 @@
 {
   "name": "proxied-node-oled",
   "private": true,
+  "scripts": {
+    "start": "sudo node index.js"
+  },
   "dependencies": {
+    "any-ipv4": "latest",
     "proxied-node": "latest",
     "express": "latest",
     "johnny-five": "latest",
