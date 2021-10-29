@@ -96,7 +96,7 @@ app.listen(PORT);
   <title>proxied-node</title>
   <script type="module">
   // the namespace is exported automatically as default
-  import('/proxied-node.js').then(async ({default: nmsp}) => {
+  import('/proxied-node.js').then(async (nmsp) => {
     console.log(await nmsp.test);
     console.log(await nmsp.sum(1, 2));
     await nmsp.delayed();

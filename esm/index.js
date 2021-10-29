@@ -6,6 +6,8 @@ import {WebSocketServer} from 'ws';
 import clientExport from './client.js';
 import serverExport from './server.js';
 
+const {keys} = Object;
+
 /**
  * @callback RequestHandler an express or generic node http server handler
  * @param {object} request the request instance
@@ -31,6 +33,7 @@ export default function ({wss: options, namespace, match, host, port}) {
   const address = host || (IPv4.length ? IPv4 : 'localhost');
   const ws = `ws://${address}:${port || options.port}`;
   const re = match || /\/(?:m?js\/)?proxied-node\.m?js$/;
+  const exported = keys(namespace).filter(key => /^[a-z$][a-z0-9$_]*$/i.test(key));
   serverExport(
     options instanceof WebSocketServer ?
       options : new WebSocketServer(options),
@@ -43,7 +46,7 @@ export default function ({wss: options, namespace, match, host, port}) {
         'Cache-Control': 'no-store',
         'Content-Type': 'application/javascript;charset=utf-8'
       });
-      response.end(clientExport(ws));
+      response.end(clientExport(ws, exported));
       return true;
     }
     try { return false; }

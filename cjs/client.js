@@ -1,10 +1,7 @@
 'use strict';
 /*! (c) Andrea Giammarchi */
 
-module.exports = URL => `export default (${proxy})();`.replace('{{URL}}', URL);
-
-function proxy() {
-
+const proxy = String(function () {
   const {parse, stringify} = JSON;
 
   const worker = $ => $;
@@ -174,4 +171,9 @@ function proxy() {
   function Proxied() {
     return this;
   }
-}
+});
+
+module.exports = (URL, keys) => `const _ = (${proxy})();
+export default _;
+export const {${keys.join(', ')}} = _;
+`.replace('{{URL}}', URL);
