@@ -1,6 +1,6 @@
 {
   "name": "proxied-node",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "A proxied-worker for NodeJS",
   "main": "./cjs/index.js",
   "scripts": {
