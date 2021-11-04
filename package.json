@@ -31,7 +31,9 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
+    "@ungap/structured-clone": "^0.3.3",
     "any-ipv4": "^0.1.1",
+    "umeta": "^0.2.4",
     "ws": "^8.2.3"
   },
   "repository": {

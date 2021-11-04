@@ -1,7 +1,20 @@
 /*! (c) Andrea Giammarchi */
 
-const proxy = String(function () {
-  const {parse, stringify} = JSON;
+import {readFileSync} from 'fs';
+import {dirname, join} from 'path';
+import umeta from 'umeta';
+
+const {require: cjs} = umeta(import.meta);
+
+const StructuredJSON = readFileSync(
+  join(
+    dirname(cjs.resolve('@ungap/structured-clone')),
+    '..',
+    'structured-json.js'
+  )
+).toString().replace(/^var\s*/, 'const ');
+
+const proxy = String(function ({parse, stringify}) {
 
   const worker = $ => $;
 
@@ -172,7 +185,8 @@ const proxy = String(function () {
   }
 });
 
-export default (URL, keys) => `const _ = (${proxy})();
+export default (URL, keys) => `${StructuredJSON}
+const _ = (${proxy})(StructuredJSON);
 export default _;
 export const {${keys.join(', ')}} = _;
 `.replace('{{URL}}', URL);

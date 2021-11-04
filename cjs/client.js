@@ -1,8 +1,21 @@
 'use strict';
 /*! (c) Andrea Giammarchi */
 
-const proxy = String(function () {
-  const {parse, stringify} = JSON;
+const {readFileSync} = require('fs');
+const {dirname, join} = require('path');
+const umeta = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('umeta'));
+
+const {require: cjs} = umeta(({url: require('url').pathToFileURL(__filename).href}));
+
+const StructuredJSON = readFileSync(
+  join(
+    dirname(cjs.resolve('@ungap/structured-clone')),
+    '..',
+    'structured-json.js'
+  )
+).toString().replace(/^var\s*/, 'const ');
+
+const proxy = String(function ({parse, stringify}) {
 
   const worker = $ => $;
 
@@ -173,7 +186,8 @@ const proxy = String(function () {
   }
 });
 
-module.exports = (URL, keys) => `const _ = (${proxy})();
+module.exports = (URL, keys) => `${StructuredJSON}
+const _ = (${proxy})(StructuredJSON);
 export default _;
 export const {${keys.join(', ')}} = _;
 `.replace('{{URL}}', URL);

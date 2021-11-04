@@ -1,13 +1,13 @@
 'use strict';
 /*! (c) Andrea Giammarchi */
 
+const {stringify, parse} = require('@ungap/structured-clone/json');
+
 const PING_INTERVAL = 30000;
 
 const APPLY = 'apply';
 const GET = 'get';
 const NEW = 'new';
-
-const {parse, stringify} = JSON;
 
 module.exports = (wss, Namespace) => {
   const alive = new WeakMap;

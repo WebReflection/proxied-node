@@ -2,7 +2,7 @@
 
 This is exactly the same [proxied-worker](https://github.com/WebReflection/proxied-worker#readme) module, specific for a *NodeJS* proxied namespace.
 
-The only difference is that the client side is already the exported namespace, not a Worker to initialize.
+The only difference is that the client side is already the exported namespace, not a Worker to initialize, and transported data uses the [Structured Clone algorithm](https://github.com/ungap/structured-clone/#readme), enabling both recursive data, but also much more than what JSON allows.
 
 Check the [oled screen demo](./test/oled/) to try it out on a Raspberry Pi.
 

@@ -1,12 +1,12 @@
 /*! (c) Andrea Giammarchi */
 
+import {stringify, parse} from '@ungap/structured-clone/json';
+
 const PING_INTERVAL = 30000;
 
 const APPLY = 'apply';
 const GET = 'get';
 const NEW = 'new';
-
-const {parse, stringify} = JSON;
 
 export default (wss, Namespace) => {
   const alive = new WeakMap;
