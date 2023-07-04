@@ -1,4 +1,4 @@
-# proxied-node
+# proxied-node DEPRECATED - See [coincident](https://github.com/WebReflection/coincident#coincidentserver)
 
 This is exactly the same [proxied-worker](https://github.com/WebReflection/proxied-worker#readme) module, specific for a *NodeJS* proxied namespace.
 
